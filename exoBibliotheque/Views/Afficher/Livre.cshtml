@@ -1,0 +1,38 @@
+﻿
+@{
+    Layout = null;
+    exoBibliotheque.Models.Livre livre = ViewData["Livre"] as exoBibliotheque.Models.Livre;
+    exoBibliotheque.Models.Emprunt emprunt = ViewData["Emprunt"] as exoBibliotheque.Models.Emprunt;
+    string emprunteur="";
+    if (emprunt!=null)
+    {
+        emprunteur = emprunt.Client.Nom;
+    }
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Livre</title>
+</head>
+<body>
+    <div>
+        <table>
+            <tr>
+                <th>Titre</th>
+                <th>Date parution</th>
+                <th>Auteur</th>
+                <th>Emprunté par</th>
+            </tr>
+            <tr>
+                <td>@livre.Titre</td>
+                <td>@livre.DateParution.ToString("dd/MM/yyyy")</td>
+                <td><a href="~/Afficher/Auteur/@livre.Auteur.Id">@livre.Auteur.Nom</a></td>
+                <td>@emprunteur</td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

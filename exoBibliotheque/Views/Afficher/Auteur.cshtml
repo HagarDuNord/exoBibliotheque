@@ -1,0 +1,35 @@
+﻿
+@{
+    Layout = null;
+    exoBibliotheque.Models.Auteur auteur = ViewData["Auteur"] as exoBibliotheque.Models.Auteur;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Auteur</title>
+</head>
+<body>
+    <div>
+        Nom : @auteur.Nom
+    </div>
+    <div>
+        Bibliographie :
+        <table>
+            <tr>
+                <th>Titre</th>
+                <th>Date parution</th>
+            </tr>
+            @foreach (exoBibliotheque.Models.Livre livre in @ViewData["Livres"] as List<exoBibliotheque.Models.Livre>)
+            {
+                <tr>
+                    <td><a href="~/Afficher/Livre/@livre.Id">@livre.Titre</a></td>
+                    <td>@livre.DateParution.ToString("dd/MM/yyyy")</td>
+                </tr>
+            }
+        </table>
+    </div>
+</body>
+</html>

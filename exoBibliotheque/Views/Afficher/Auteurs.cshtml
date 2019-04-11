@@ -1,0 +1,28 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Auteurs</title>
+</head>
+<body>
+    <div>
+        <table>
+            <tr>
+                <th>Nom</th>
+            </tr>
+            @foreach (exoBibliotheque.Models.Auteur auteur in @ViewData["Auteurs"] as List<exoBibliotheque.Models.Auteur>)
+            {
+                <tr>
+                    <td><a href="~/Afficher/Auteur/@auteur.Id">@auteur.Nom</a></td>
+                </tr>
+            }
+        </table>
+    </div>
+</body>
+</html>

@@ -1,0 +1,32 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Livres</title>
+</head>
+<body>
+    <div>
+        <table>
+            <tr>
+                <th>Titre</th>
+                <th>Date parution</th>
+                <th>Auteur</th>
+            </tr>
+            @foreach (exoBibliotheque.Models.Livre livre in @ViewData["Livres"] as List<exoBibliotheque.Models.Livre>)
+            {
+                <tr>
+                    <td><a href="~/Afficher/Livre/@livre.Id">@livre.Titre</a></td>
+                    <td>@livre.DateParution.ToString("dd/MM/yyyy")</td>
+                    <td><a href="~/Afficher/Auteur/@livre.Auteur.Id">@livre.Auteur.Nom</a></td>
+                </tr>
+            }
+        </table>
+    </div>
+</body>
+</html>
