@@ -1,4 +1,4 @@
-﻿
+﻿@model List<exoBibliotheque.Models.Auteur>
 @{
     Layout = null;
 }
@@ -16,10 +16,10 @@
             <tr>
                 <th>Nom</th>
             </tr>
-            @foreach (exoBibliotheque.Models.Auteur auteur in @ViewData["Auteurs"] as List<exoBibliotheque.Models.Auteur>)
+            @foreach (exoBibliotheque.Models.Auteur auteur in Model)
             {
                 <tr>
-                    <td><a href="~/Afficher/Auteur/@auteur.Id">@auteur.Nom</a></td>
+                    <td>@Html.ActionLink(@auteur.Nom, "Auteur", new { id = @auteur.Id })</td>
                 </tr>
             }
         </table>

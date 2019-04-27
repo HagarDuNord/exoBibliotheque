@@ -1,0 +1,59 @@
+﻿@model exoBibliotheque.ViewModels.LivreViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <script type="text/javascript" src="~/Scripts/jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.validate-vsdoc.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script type="text/javascript">
+        jQuery.validator.addMethod("datepast",
+            function (value, element) {
+                
+                var dateATester = new Date(value);
+                var dateJour = new Date();
+                
+                if (dateATester >= dateJour) {
+                    return false;
+                }
+                return true;
+            });
+
+        jQuery.validator.unobtrusive.adapters.add
+            ("datepast", function (options) {
+                options.rules["datepast"] = options.params;
+                options.messages["datepast"] = options.message;
+            });
+    </script>
+    <link type="text/css" href="~/Content/Site.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Livre</title>
+</head>
+<body>
+    @using (Html.BeginForm())
+    {
+    <div>
+        @Html.LabelFor(model => Model.Titre)
+        @Html.TextBoxFor(model => Model.Titre)
+        @Html.ValidationMessageFor(model => Model.Titre)
+    </div>
+    <div>
+        @Html.LabelFor(model => Model.DateParution)
+        @Html.TextBoxFor(model => Model.DateParution)
+        @Html.ValidationMessageFor(model => Model.DateParution)
+    </div>
+    <div>
+        @Html.LabelFor(model => Model.AuteurId)
+        @Html.DropDownListFor(model => Model.AuteurId, (SelectList)ViewBag.Auteurs)
+        @Html.ValidationMessageFor(model => Model.AuteurId)
+    </div>
+
+
+    <input type="submit" value="Créer" />
+    }
+</body>
+</html>

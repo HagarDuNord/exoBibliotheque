@@ -8,14 +8,22 @@ namespace exoBibliotheque.Models
 {
     public class Livre
     {
-        // Identifiant technique du livre
+        /// <summary>
+        /// Identifiant technique du livre
+        /// </summary>
         public int Id { get; set;}
-        // Titre du livre
+        /// <summary>
+        /// Titre du livre 
+        /// </summary>
         [Required]
         public string Titre { get; set; }
-        // Date de parution du livre
+        /// <summary>
+        /// Date de parution du livre
+        /// </summary>
         public DateTime DateParution { get; set; }
-        // Auteur du livre
+        /// <summary>
+        /// Auteur du livre 
+        /// </summary>
         public virtual Auteur Auteur { get; set; }
     }
 }

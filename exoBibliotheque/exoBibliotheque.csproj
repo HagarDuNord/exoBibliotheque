@@ -139,6 +139,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AfficherController.cs" />
+    <Compile Include="Controllers\AjouterController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RechercherController.cs" />
     <Compile Include="Global.asax.cs">
@@ -152,6 +153,11 @@
     <Compile Include="Models\Emprunt.cs" />
     <Compile Include="Models\Livre.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Validators\DatePast.cs" />
+    <Compile Include="ViewModels\AuteurViewModel.cs" />
+    <Compile Include="ViewModels\LivreDetailViewModel.cs" />
+    <Compile Include="ViewModels\LivreViewModel.cs" />
+    <Compile Include="ViewModels\RechercheViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -189,12 +195,13 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Afficher\Livres.cshtml" />
+    <Content Include="Views\Afficher\Index.cshtml" />
     <Content Include="Views\Afficher\Auteurs.cshtml" />
     <Content Include="Views\Afficher\Auteur.cshtml" />
     <Content Include="Views\Afficher\Livre.cshtml" />
     <Content Include="Views\Rechercher\Livre.cshtml" />
-    <Content Include="Views\Rechercher\Auteur.cshtml" />
+    <Content Include="Views\Rechercher\Index.cshtml" />
+    <Content Include="Views\Ajouter\Livre.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

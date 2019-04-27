@@ -35,7 +35,34 @@ namespace exoBibliotheque.Models.DataAccess
             // Le client n'existe pas, on retourne Null
             return null;
         }
+        public bool LivreExiste(string titre)
+        {
+            Livre livreTrouve = bdd.Livres.FirstOrDefault(livre => livre.Titre == titre);
+            return (livreTrouve != null);
+        }
+        public Livre CreerLivre(string titre, DateTime dateParution, int idAuteur)
+        {
+            Auteur auteur = ObtenirAuteur(idAuteur);
+            if (auteur == null) return null;
+            //TODO : A Supprimer lorsqu'on aura une persistance en base
+            int idLivre;
+            if (bdd.Livres.Count > 0)
+            {
+                idLivre = bdd.Livres.Max(item => item.Id) + 1;
+            }
+            else
+            {
+                idLivre = 1;
+            }
 
+            Livre livre = new Livre();
+            livre.Id = idLivre;
+            livre.Titre = titre;
+            livre.DateParution = dateParution;
+            livre.Auteur = auteur;
+            bdd.Livres.Add(livre);
+            return livre;
+        }
         public Emprunt CreerEmprunt(int idLivre, string email, DateTime dateEmprunt)
         {
             Livre livre = ObtenirLivre(idLivre);
@@ -48,7 +75,15 @@ namespace exoBibliotheque.Models.DataAccess
             if (ObtenirEmpruntsActifParClient(email).Count>=MAX_LIVRE_EMPRUNTE) return null;
             // Recherche le prochain
             //TODO : A Supprimer lorsqu'on aura une persistance en base
-            int idEmprunt = bdd.Emprunts.Max(empruntMax => empruntMax.Id) + 1;
+            int idEmprunt;
+            if (bdd.Emprunts.Count > 0)
+            {
+                idEmprunt = bdd.Emprunts.Max(empruntMax => empruntMax.Id) + 1;
+            }
+            else
+            {
+                idEmprunt = 0;
+            }
             Emprunt emprunt = new Emprunt { Id=idEmprunt, Livre=livre, Client=client, DateEmprunt= dateEmprunt };
             return emprunt;
 
@@ -120,7 +155,6 @@ namespace exoBibliotheque.Models.DataAccess
 
         public List<Livre> ObtenirLivresParAuteur(int idAuteur)
         {
-            //TODO : Implémenter un TU
             return bdd.Livres.FindAll(livre => livre.Auteur.Id ==idAuteur);
         }
 

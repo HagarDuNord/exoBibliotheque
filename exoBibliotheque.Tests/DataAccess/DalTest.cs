@@ -32,6 +32,41 @@ namespace exoBibliotheque.Tests.DataAccess
             bool clientTrouve = dal.ClientExiste(EMAIL_CLIENT_INCONNU);
             Assert.IsFalse(clientTrouve);
         }
+        /// <summary>
+        /// Vérifie que la fonction ExistLivre retourne false pour un titre qui n'existe pas
+        /// </summary>
+        [TestMethod]
+        public void LivreExiste_TitreInconnu()
+        {
+            string titreInconnu = "Titre bidon";
+            bool resulat = dal.LivreExiste(titreInconnu);
+            Assert.IsFalse(resulat);
+        }
+        /// <summary>
+        /// Vérifie que la fonction ExistLivre retourne true pour un titre qui n'existe pas
+        /// </summary>
+        [TestMethod]
+        public void LivreExiste_TitreConnu()
+        {
+            string titreConnu = "Shinning";
+            bool resulat = dal.LivreExiste(titreConnu);
+            Assert.IsTrue(resulat);
+        }
+        /// <summary>
+        /// Vérifie que la fonction créer livre ajoute un livre en base
+        /// </summary>
+        [TestMethod]
+        public void CreerLivre_NouveauLivre()
+        {
+            int idAuteur = 2; // Victor Hugo
+            DateTime dateParution = DateTime.Today;
+            string titre = "Nv best seller";
+            int nbLivreAvant = dal.ObtenirTousLesLivres().Count;
+            Livre livre=dal.CreerLivre(titre, dateParution, idAuteur);
+            int nbLivreApres = dal.ObtenirTousLesLivres().Count;
+            Assert.IsNotNull(livre);
+            Assert.AreEqual(nbLivreApres, nbLivreAvant + 1);
+        }
 
         [TestMethod]
         public void CreerClient_NouveauClient()
@@ -169,7 +204,39 @@ namespace exoBibliotheque.Tests.DataAccess
             Assert.IsNotNull(liste);
             Assert.AreEqual(0, liste.Count);
         }
-
+        /// <summary>
+        /// Vérifie que la fonction retourne une liste pour un auteur inconnu
+        /// </summary>
+        [TestMethod]
+        public void ObtenirLivresParAuteur_AuteurInconnu()
+        {
+            int idAuteurInconnu = -1;
+            List<Livre> liste = dal.ObtenirLivresParAuteur(idAuteurInconnu);
+            Assert.IsNotNull(liste);
+            Assert.AreEqual(0,liste.Count);
+        }
+        /// <summary>
+        /// Vérifie que la fonction retourne une liste vide pour un auteur qui n'a pas de livre
+        /// </summary>
+        [TestMethod]
+        public void ObtenirLivresParAuteur_Auteur_SansLivre()
+        {
+            int idAuteurSansLivre = 4; // Isaac Asimov
+            List<Livre> liste = dal.ObtenirLivresParAuteur(idAuteurSansLivre);
+            Assert.IsNotNull(liste);
+            Assert.AreEqual(0, liste.Count);
+        }
+        /// <summary>
+        /// Vérifie que la fonction retourne une liste remplie pour un auteur qui a des livres
+        /// </summary>
+        [TestMethod]
+        public void ObtenirLivresParAuteur_Auteur_AvecLivre()
+        {
+            int idAuteurAvecLivre = 1; // Stephen King
+            List<Livre> liste = dal.ObtenirLivresParAuteur(idAuteurAvecLivre);
+            Assert.IsNotNull(liste);
+            Assert.AreEqual(3, liste.Count);
+        }
         [TestMethod]
         public void ObtenirLivre_IdConnu()
         {
@@ -227,10 +294,10 @@ namespace exoBibliotheque.Tests.DataAccess
         [TestMethod]
         public void RechercherAuteurs_Majuscule_2Resultats()
         {
-            string texte = "S"; // Stephen King & Lewis Carroll
+            string texte = "S"; // Stephen King & Lewis Carroll & Isaac Asimov
             List<Auteur> liste = dal.RechercherAuteurs(texte);
             Assert.IsNotNull(liste);
-            Assert.AreEqual(2, liste.Count);
+            Assert.AreEqual(3, liste.Count);
         }
 
         [TestMethod]

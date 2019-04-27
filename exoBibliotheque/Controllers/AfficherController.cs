@@ -1,5 +1,6 @@
 ﻿using exoBibliotheque.Models;
 using exoBibliotheque.Models.DataAccess;
+using exoBibliotheque.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,39 +18,71 @@ namespace exoBibliotheque.Controllers
             dal = new Dal(BddBouchon.Instance);
         }
 
-        // GET: Afficher
-        public ActionResult Livres()
+        
+        /// <summary>
+        /// Affiche la liste des livres
+        /// </summary>
+        /// <returns>Vue Index</returns>
+        public ActionResult Index()
         {
            
-            ViewData["Livres"] = dal.ObtenirTousLesLivres();
-            return View();
+            List<Livre> vm = dal.ObtenirTousLesLivres();
+            return View(vm);
         }
+        /// <summary>
+        /// Affiche le détatil d'un livre et le nom de l'emprunteur
+        /// </summary>
+        /// <param name="id">Id technique du livre à afficher</param>
+        /// <returns>Vue Livre</returns>
         public ActionResult Livre(string id)
         {
+            // Contrôle des paramètres
             int idLivre;
-            if (id is null || (!int.TryParse(id, out idLivre))) return View("Error");
+            if (string.IsNullOrEmpty(id) || (!int.TryParse(id, out idLivre))) return View("Error");
+            // Recherche du livre
             Livre livre = dal.ObtenirLivre(idLivre);
-            if (livre is null) return View("Error");
-            ViewData["Livre"] = livre;
+            if (livre ==null) return new HttpNotFoundResult();
+            
+            // Récupérer l'emprunt courant du livre
             Emprunt emprunt = dal.ObtenirEmpruntActifParLivre(idLivre);
-            ViewData["Emprunt"] = emprunt;
-            return View();
+            // Construction du viewModel et affichage de la vue
+            LivreDetailViewModel livreViewModel = new LivreDetailViewModel();
+            livreViewModel.Livre = livre;
+            if (emprunt!=null) { 
+                livreViewModel.NomEmpruteur = emprunt.Client.Nom;
+            }
+            return View(livreViewModel);
+
         }
+        /// <summary>
+        /// Affiche la liste des auteurs
+        /// </summary>
+        /// <returns>Vue Auteurs</returns>
         public ActionResult Auteurs()
         {
-            ViewData["Auteurs"] = dal.ObtenirTousLesAuteurs();
-            return View();
+            List<Auteur>  vm = dal.ObtenirTousLesAuteurs();
+            return View(vm);
         }
+        /// <summary>
+        /// Affiche le détail d'un auteur et la liste des livres
+        /// </summary>
+        /// <param name="id">Id technique de l'auteur</param>
+        /// <returns>Vue Auteur</returns>
         public ActionResult Auteur(string id)
         {
+            // Controle des paramètres
             int idAuteur;
-            if (id is null || (!int.TryParse(id, out idAuteur))) return View("Error");
+            if (string.IsNullOrEmpty(id) || (!int.TryParse(id, out idAuteur))) return View("Error");
+            // Recherche de l'auteur
             Auteur auteur = dal.ObtenirAuteur(idAuteur);
-            if (auteur is null) return View("Error");
+            if (auteur is null) return new HttpNotFoundResult();
+            //Récupère les livres de l'auteur
             List<Livre> livres = dal.ObtenirLivresParAuteur(idAuteur);
-            ViewData["Auteur"] = auteur;
-            ViewData["Livres"] = livres;
-            return View();
+            // Contrusction du viewModel et affichage de la vue
+            AuteurViewModel vm = new AuteurViewModel();
+            vm.Auteur = auteur;
+            vm.Livres = livres;
+            return View(vm);
         }
     }
 }

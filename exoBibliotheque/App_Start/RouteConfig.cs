@@ -14,12 +14,6 @@ namespace exoBibliotheque
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
-                name: "Afficher",
-                url: "Afficher/{action}/{id}",
-                defaults: new { controller = "Afficher", action = "Livres", id = UrlParameter.Optional }
-            );
-
-            routes.MapRoute(
                 name: "Rechercher",
                 url: "Rechercher/{action}/{texteCherche}",
                 defaults: new { controller = "Rechercher", texteCherche = UrlParameter.Optional }

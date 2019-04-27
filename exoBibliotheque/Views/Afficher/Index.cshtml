@@ -1,0 +1,33 @@
+﻿@model List<exoBibliotheque.Models.Livre>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Livres</title>
+</head>
+<body>
+    <div>
+        <table>
+            <tr>
+                <th>Titre</th>
+                <th>Date parution</th>
+                <th>Auteur</th>
+            </tr>
+            @foreach (exoBibliotheque.Models.Livre livre in Model)
+            {
+                <tr>
+                    <td>@Html.ActionLink(@livre.Titre, "Livre", new { id = livre.Id })</td>
+                    <td>@livre.DateParution.ToString("dd/MM/yyyy")</td>
+                    <td>@Html.ActionLink(@livre.Auteur.Nom, "Auteur", new { id = livre.Auteur.Id })</td>
+                </tr>
+            }
+        </table>
+        @Html.ActionLink("Ajouter", "Livre", "Ajouter")
+    </div>
+</body>
+</html>

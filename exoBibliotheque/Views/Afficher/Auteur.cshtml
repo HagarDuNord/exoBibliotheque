@@ -1,7 +1,6 @@
-﻿
+﻿@model exoBibliotheque.ViewModels.AuteurViewModel
 @{
     Layout = null;
-    exoBibliotheque.Models.Auteur auteur = ViewData["Auteur"] as exoBibliotheque.Models.Auteur;
 }
 
 <!DOCTYPE html>
@@ -13,7 +12,7 @@
 </head>
 <body>
     <div>
-        Nom : @auteur.Nom
+        Nom : @Model.Auteur.Nom
     </div>
     <div>
         Bibliographie :
@@ -22,10 +21,10 @@
                 <th>Titre</th>
                 <th>Date parution</th>
             </tr>
-            @foreach (exoBibliotheque.Models.Livre livre in @ViewData["Livres"] as List<exoBibliotheque.Models.Livre>)
+            @foreach (exoBibliotheque.Models.Livre livre in @Model.Livres)
             {
                 <tr>
-                    <td><a href="~/Afficher/Livre/@livre.Id">@livre.Titre</a></td>
+                    <td>@Html.ActionLink(@livre.Titre, "Livre", new { id = livre.Id })</td>
                     <td>@livre.DateParution.ToString("dd/MM/yyyy")</td>
                 </tr>
             }

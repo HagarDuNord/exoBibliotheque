@@ -24,7 +24,8 @@ namespace exoBibliotheque.Models.DataAccess
             Auteur auteur1 = new Auteur { Id = 1, Nom = "Stephen King" };
             Auteur auteur2 = new Auteur { Id = 2, Nom = "Victor Hugo" };
             Auteur auteur3 = new Auteur { Id = 3, Nom = "Lewis Carroll" };
-            Auteurs = new List<Auteur> { auteur1, auteur2, auteur3 };
+            Auteur auteur4 = new Auteur { Id = 4, Nom = "Isaac Asimov" };
+            Auteurs = new List<Auteur> { auteur1, auteur2, auteur3, auteur4 };
             // Initialisation des livres
             Livre livre1 = new Livre { Id = 1, Titre = "Shinning", DateParution = new DateTime(1977, 1, 28), Auteur = auteur1 };
             Livre livre2 = new Livre { Id = 2, Titre = "Docteur Sleep", DateParution = new DateTime(2013, 9, 24), Auteur = auteur1 };
