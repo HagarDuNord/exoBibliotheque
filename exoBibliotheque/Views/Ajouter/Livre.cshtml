@@ -13,8 +13,13 @@
     <script type="text/javascript">
         jQuery.validator.addMethod("datepast",
             function (value, element) {
+                var regExpDate = new RegExp("d{2})\/(\d{2})\/(\d{4})$");
+                var dateTableau = regExpDate.exec(value);
+                if (dateTableau == null) {
+                    return false;
+                }
                 
-                var dateATester = new Date(value);
+                var dateATester = new Date(dateTableau[2], dateTableau[1], dateTableau[0]);
                 var dateJour = new Date();
                 
                 if (dateATester >= dateJour) {

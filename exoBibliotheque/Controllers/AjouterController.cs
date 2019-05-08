@@ -42,19 +42,26 @@ namespace exoBibliotheque.Controllers
                 modeleOk = false;
                 
             }
-            else
+            // Vérifie que l'auteur existe
+            if (dal.ObtenirAuteur(livre.AuteurId)==null)
             {
-                if (dal.LivreExiste(livre.Titre))
-                {
-                    modeleOk = false;
-                    ModelState.AddModelError("Titre", "Ce titre de livre existe déjà");
-                }
+                modeleOk = false;
+                ModelState.AddModelError("AuteurId", Constants.ERROR_AUTEUR_INCONNU);
             }
+
+            // Vérifie qu'il n'existe pas déjà un livre avec le même titre
+            if (dal.LivreExiste(livre.Titre))
+            {
+                modeleOk = false;
+                ModelState.AddModelError("Titre", Constants.ERROR_TITRE_EXISTANT);
+            }
+            // Si une erreur a été détectée, on renvoie vers la page avec le modèle
             if (! modeleOk)
             {
                 AlimenterListeAuteur(livre.AuteurId);
                 return View(livre);
             }
+            // Pas d'erreur, on créé le livre et on réaffiche la liste des livres
             Livre livreCreer = dal.CreerLivre(livre.Titre, livre.DateParution, livre.AuteurId);
             return RedirectToAction("Index","Afficher");
         }

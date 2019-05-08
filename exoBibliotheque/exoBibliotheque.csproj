@@ -138,8 +138,10 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="Controllers\AfficherController.cs" />
     <Compile Include="Controllers\AjouterController.cs" />
+    <Compile Include="Controllers\ControllerExtensions.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RechercherController.cs" />
     <Compile Include="Global.asax.cs">

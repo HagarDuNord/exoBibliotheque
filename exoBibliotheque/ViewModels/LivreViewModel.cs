@@ -22,8 +22,10 @@ namespace exoBibliotheque.ViewModels
         /// <summary>
         /// Date de parution du livre
         /// </summary>
-        [Required,DatePast(ErrorMessage = "La date de parution doit être inférieure à la date du jour")]
-        [Display(Name = "Date de parution (au format AAAA-MM-JJ)")]
+        [Required]
+        [DatePast(ErrorMessage = Constants.ERROR_DATE_PARUTION_NON_PASSEE, ErrorMessageResourceName = "DateParution")]
+        [DisplayFormat(DataFormatString = "{dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Date de parution")]
         public DateTime DateParution { get; set; }
         /// <summary>
         /// Identifiant de l'auteur du livre 

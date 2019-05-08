@@ -23,8 +23,13 @@ namespace exoBibliotheque.Validators
         protected override ValidationResult IsValid(
         object value, ValidationContext validationContext)
         {
-            if ((DateTime)value >= DateTime.Today)
-                return new ValidationResult(GetErrorMessage());
+            string[] memberName = new string[] { validationContext.MemberName };
+            if (value==null || (DateTime)value >= DateTime.Today)
+            {
+                
+                return new ValidationResult(GetErrorMessage(),memberName);
+            }
+                
             return ValidationResult.Success;
         }
         /// <summary>
