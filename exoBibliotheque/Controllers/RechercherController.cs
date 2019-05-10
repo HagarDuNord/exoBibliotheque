@@ -13,9 +13,12 @@ namespace exoBibliotheque.Controllers
     {
         Dal dal;
 
-        public RechercherController()
+        public RechercherController() : this(new Dal(BddBouchon.Instance))
         {
-            dal = new Dal(BddBouchon.Instance);
+        }
+        public RechercherController(Dal dalIoC)
+        {
+            dal = dalIoC;
         }
         /// <summary>
         /// Affiche le formulaire permettant d'afficher le formulaire de saisie du mot recherché

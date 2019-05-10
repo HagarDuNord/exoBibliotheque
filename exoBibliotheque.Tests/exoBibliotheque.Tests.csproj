@@ -102,6 +102,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\AjouterControllerTest.cs" />
+    <Compile Include="Controllers\ControllerExtensions.cs" />
+    <Compile Include="Controllers\RechercherControllerTest.cs" />
     <Compile Include="DataAccess\DalTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\HomeControllerTest.cs" />

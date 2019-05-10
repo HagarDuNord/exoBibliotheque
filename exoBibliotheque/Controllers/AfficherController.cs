@@ -13,12 +13,14 @@ namespace exoBibliotheque.Controllers
     {
         Dal dal;
 
-        public AfficherController()
+        public AfficherController() : this(new Dal(BddBouchon.Instance))
         {
-            dal = new Dal(BddBouchon.Instance);
         }
 
-        
+        public AfficherController(Dal dalIoc)
+        {
+            dal = dalIoc;
+        }
         /// <summary>
         /// Affiche la liste des livres
         /// </summary>
